@@ -1,0 +1,47 @@
+*{
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+h2{
+    padding: 10px;
+    font-size: 1.5rem;
+}
+p{
+ font-size: small;
+}
+.singUpMain{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    background-image: linear-gradient(to bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-size:  cover;
+    height: 100vh;
+    padding-top: 10%;
+}
+
+.input-from{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    
+    
+}
+.input-from>input,button{
+    padding: 10px 40px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+}
+.input-from>input{
+    background-color: bisque;
+    outline: none;
+
+}
+.input-from>button{
+    background-color: #760ed7b5;
+    cursor: pointer;
+}
