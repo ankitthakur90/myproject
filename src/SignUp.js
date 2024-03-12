@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import Login from "./Login.js";
-import Home from "./Home.js";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "./SignUp.css";
+import { database } from "./firbaseConfig.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 function SignUp() {
+  const navigate = useNavigate("");
+  const history = useNavigate("");
   const form = document.querySelector("form");
   const [name, setName] = useState(" ");
   const [email, setEmail] = useState(" ");
@@ -25,28 +27,27 @@ function SignUp() {
     setConfrimPassword(event.target.value);
   };
 
-
-
-
-
-
   const handleSubmit = (ev) => {
-    if (ConfrimPassword === password) {
-      form.reset();
-      alert("Form Submited!!!!");
+    ev.preventDefault();
+    if (name === "" || email === "" || password === " ") {
+      alert("enter the Value");
+    } else if (ConfrimPassword === password) {
+      createUserWithEmailAndPassword(database, email, password).then((data) => {
+        console.log(data, "authdata");
+        history("/home");
+        form.reset();
+      }).catch((err) => {
+        alert(err.code);
+      });
     } else {
-      ev.preventDefault();
       alert("Password Not Matched!!!!!!");
     }
   };
 
+  const handleLink = () => {
+    navigate("/");
+  };
 
-
-
-
-
-
-  
   const showData = (e) => {
     console.log(name, email, password, ConfrimPassword);
   };
@@ -74,7 +75,7 @@ function SignUp() {
 
       <p>
         Already have an account?{" "}
-        <a href="#">
+        <a onClick={handleLink}>
           <strong>Login</strong>
         </a>
       </p>

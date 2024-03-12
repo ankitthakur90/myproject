@@ -1,23 +1,38 @@
 import React, { useState } from "react";
 import "./login.css";
-// import { useNavigate } from "react-router-dom";
+import SignUp from "./SignUp";
+import { useNavigate } from "react-router-dom";
+import { database } from "./firbaseConfig.js";
 
+import { signInWithEmailAndPassword } from "firebase/auth";
 function Login() {
-  const [data, setData] = useState({ mail: " ", pwd: " " });
 
-  // const naviate = useNavigate();
+  const navigate = useNavigate("");
 
-  const handleInput = (event) => {
-    setData({ ...data, [event.target.name]: event.target.value });
+  const [email, setEmail] = useState(" ");
+  const [password, setPassword] = useState(" ");
+
+  const handleInputEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleInputPassword = (event) => {
+    setPassword(event.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (data.mail == "at@gmail.com" && data.pwd == "123") {
-      alert('hlo...')
-    } else {
-      alert("Error 404");
-    }
+    signInWithEmailAndPassword(database, email, password)
+      .then((data) => {
+        navigate("/home");
+      })
+      .catch((err) => {
+        alert(err.code);
+      });
+  };
+
+  const handleClickLink = () => {
+    navigate("/SignUp");
   };
 
   return (
@@ -25,14 +40,14 @@ function Login() {
       <h2>Log-In</h2>
       <form onSubmit={handleSubmit} className="input-from">
         <input
-          onChange={handleInput}
+          onChange={handleInputEmail}
           name="mail"
-          type="mail"
+          type="email"
           placeholder="Email"
         />
         <input
-          onChange={handleInput}
-          type="pwd"
+          onChange={handleInputPassword}
+          type="Password"
           name="pwd"
           placeholder="Password"
         />
@@ -41,7 +56,7 @@ function Login() {
 
       <p>
         create New account?{" "}
-        <a href="#">
+        <a onClick={handleClickLink}>
           <strong>SignUp</strong>
         </a>
       </p>
